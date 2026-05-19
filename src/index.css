@@ -1,0 +1,22 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle, #0f172a, #020617);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Optional smooth text rendering */
+html {
+  scroll-behavior: smooth;
+}
