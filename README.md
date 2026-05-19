@@ -1,16 +1,61 @@
-# React + Vite
+# WiFi Speed Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern WiFi speed testing web application built with React (Vite).  
+It measures real internet download speed by downloading a test file and calculating transfer time in the browser.
 
-Currently, two official plugins are available:
+It is not magic. It just looks like it is.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Project Goal
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The goal of this project is to simulate a real-world internet speed test in a simple and visual way.  
+It helps users understand how download speed is measured while keeping the implementation beginner-friendly.
 
-## Expanding the ESLint configuration
+It also exists to prove that your internet is either fast, average, or emotionally disappointing.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Features
+
+- Real download-based speed measurement
+- Live progress indicator during test
+- Clean and modern UI design
+- Simple and fast user experience
+- Funny and human-friendly status messages
+- Lightweight and beginner-friendly codebase
+
+---
+
+## Tech Stack
+
+- React (Vite)
+- JavaScript (ES6+)
+- HTML5
+- CSS3
+- Fetch API
+- Performance API
+
+---
+
+## How It Works
+
+1. The app downloads a real file from a remote server.
+2. It measures how long your internet takes to download it.
+3. It calculates speed using a simple formula:
+
+   Speed (Mbps) = (File size in megabits) / Time in seconds
+
+4. It shows the result on screen as a number that may or may not hurt your feelings.
+
+Technically, it is accurate. Emotionally, it is dangerous.
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/your-username/wifi-speedtest.git
+cd wifi-speedtest
+npm install
+npm run dev
