@@ -57,5 +57,4 @@ Technically, it is accurate. Emotionally, it is dangerous.
 ```bash
 git clone https://github.com/your-username/wifi-speedtest.git
 cd wifi-speedtest
-npm install
-npm run dev
+open index.html
