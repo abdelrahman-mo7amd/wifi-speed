@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wi.Speed — WiFi Speed Lab</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@100..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-inner" id="ticker">
+    <span>Wi.Speed LABS v1.0</span> &nbsp;★&nbsp;
+    <span>Your router has feelings too</span> &nbsp;★&nbsp;
+    <span>Not responsible for existential crises</span> &nbsp;★&nbsp;
+    <strong>LIVE MEASUREMENT PROTOCOL ACTIVE</strong> &nbsp;★&nbsp;
+    <span>Accuracy: suspiciously good</span> &nbsp;★&nbsp;
+    <span>Your ISP will be notified. (Just kidding.)</span> &nbsp;★&nbsp;
+    <span>Buffering is just your WiFi doing yoga</span> &nbsp;★&nbsp;
+    <strong>PRESS THE BUTTON. DO IT.</strong> &nbsp;★&nbsp;
+    <span>Wi.Speed LABS v1.0</span> &nbsp;★&nbsp;
+    <span>Your router has feelings too</span> &nbsp;★&nbsp;
+    <span>Not responsible for existential crises</span> &nbsp;★&nbsp;
+    <strong>LIVE MEASUREMENT PROTOCOL ACTIVE</strong> &nbsp;★&nbsp;
+    <span>Accuracy: suspiciously good</span> &nbsp;★&nbsp;
+    <span>Your ISP will be notified. (Just kidding.)</span> &nbsp;★&nbsp;
+    <span>Buffering is just your WiFi doing yoga</span> &nbsp;★&nbsp;
+    <strong>PRESS THE BUTTON. DO IT.</strong> &nbsp;★&nbsp;
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Wi.Speed<span>.</span></div>
+  <div class="header-tagline">The internet's only <em>honest</em> speed test</div>
+  <div class="header-badge">LABS BUILD 3.7.0</div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-left">
+    <div>
+      <div class="hero-eyebrow">WiFi Diagnostic Laboratory</div>
+      <h1 class="hero-title">
+        How<br>
+        <span class="italic-word">fast</span><br>
+        is your<br>
+        internet?
+      </h1>
+      <p class="hero-subtitle">
+        We'll launch <strong>100 bytes of pure chaos</strong> across the tubes to measure your download and upload speed. Science. <strong>Brutal, unfiltered science.</strong><br><br>
+        Results in approximately 15 seconds. Side effects include mild euphoria or devastating disappointment.
+      </p>
+    </div>
+
+    <!-- STATS ROW under copy -->
+    <div>
+      <div class="stats-row" style="border-top: 1px solid var(--border); border-bottom: none;">
+        <div class="stat-box">
+          <div class="stat-label"><span class="stat-icon">↓</span> Download</div>
+          <div class="stat-value" id="stat-dl">—</div>
+          <div class="stat-sub" id="stat-dl-comment">Waiting to judge you</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label"><span class="stat-icon">↑</span> Upload</div>
+          <div class="stat-value" id="stat-ul">—</div>
+          <div class="stat-sub" id="stat-ul-comment">Your uploads matter too</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label"><span class="stat-icon">◎</span> Ping</div>
+          <div class="stat-value" id="stat-ping">—</div>
+          <div class="stat-sub" id="stat-ping-comment">Speed of feelings</div>
+        </div>
+      </div>
+
+      <button class="btn-go" id="btn-start" onclick="startTest()">
+        Run the Gauntlet
+        <span class="btn-sub" id="btn-sub-text">Click once. No refunds on bad results.</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- GAUGE -->
+  <div class="hero-right">
+    <div class="gauge-wrap">
+      <svg id="gauge-svg" viewBox="0 0 280 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Speed gauge">
+        <!-- Track arc background -->
+        <path d="M 30 200 A 110 110 0 0 1 250 200" stroke="#c8c4bc" stroke-width="8" stroke-linecap="round" fill="none" id="gauge-track"/>
+        <!-- Colored progress arc -->
+        <path d="M 30 200 A 110 110 0 0 1 250 200" stroke="#0a0a0a" stroke-width="8" stroke-linecap="round" fill="none"
+          stroke-dasharray="345.6" stroke-dashoffset="345.6" id="gauge-arc"
+          style="transition: stroke-dashoffset 0.4s ease, stroke 0.3s ease;"/>
+
+        <!-- Tick marks -->
+        <g id="ticks"></g>
+
+        <!-- Needle -->
+        <g class="needle-group" id="needle-group">
+          <line x1="140" y1="200" x2="140" y2="90" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="140" cy="200" r="8" fill="#0a0a0a"/>
+          <circle cx="140" cy="200" r="4" fill="#f5f2eb"/>
+        </g>
+
+        <!-- Labels -->
+        <text x="26" y="226" font-family="Space Mono" font-size="10" fill="#5a5a5a">0</text>
+        <text x="120" y="88" font-family="Space Mono" font-size="10" fill="#5a5a5a" text-anchor="middle">50</text>
+        <text x="241" y="226" font-family="Space Mono" font-size="10" fill="#5a5a5a" text-anchor="end">100+</text>
+
+        <!-- Center speed display -->
+        <text id="gauge-speed" x="140" y="172" font-family="Space Mono" font-size="36" font-weight="700" fill="#0a0a0a" text-anchor="middle" dominant-baseline="middle">0</text>
+        <text x="140" y="194" font-family="Space Mono" font-size="11" fill="#5a5a5a" text-anchor="middle">Mbps</text>
+      </svg>
+    </div>
+
+    <div style="text-align: center; width: 100%;">
+      <div style="font-family: var(--mono); font-size: 11px; color: var(--mid); letter-spacing: 0.1em; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <span class="live-dot" id="live-dot"></span>
+        <span id="gauge-status">Ready for your disappointment</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRESS SECTION -->
+<div class="progress-section" id="progress-section">
+  <div class="progress-header">
+    <div class="progress-phase" id="progress-phase">Initialising...</div>
+    <div class="progress-pct" id="progress-pct">0%</div>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+  <div class="progress-quip" id="progress-quip">Consulting the ancient texts...</div>
+</div>
+
+<!-- RESULTS PANEL -->
+<div class="results-panel" id="results-panel">
+  <div class="results-header">
+    <div class="results-title">Results.</div>
+    <div class="results-verdict" id="results-verdict">Hmm.</div>
+  </div>
+
+  <div class="results-grid">
+    <div class="result-card highlight">
+      <div class="result-card-label">Download Speed</div>
+      <div class="result-card-value" id="res-dl">0</div>
+      <div class="result-card-unit">Mbps</div>
+      <div class="result-card-comment" id="res-dl-comment">—</div>
+    </div>
+    <div class="result-card">
+      <div class="result-card-label">Upload Speed</div>
+      <div class="result-card-value" id="res-ul">0</div>
+      <div class="result-card-unit">Mbps</div>
+      <div class="result-card-comment" id="res-ul-comment">—</div>
+    </div>
+    <div class="result-card">
+      <div class="result-card-label">Latency (Ping)</div>
+      <div class="result-card-value" id="res-ping">0</div>
+      <div class="result-card-unit">milliseconds</div>
+      <div class="result-card-comment" id="res-ping-comment">—</div>
+    </div>
+  </div>
+
+  <div class="verdict-banner">
+    <div class="verdict-score" id="verdict-score">B</div>
+    <div class="verdict-text">
+      <div class="verdict-headline" id="verdict-headline">Connection is fine.</div>
+      <div class="verdict-description" id="verdict-description">The internet gods have spoken. Mostly fine.</div>
+    </div>
+    <div>
+      <div style="font-family: var(--mono); font-size: 10px; color: var(--mid); margin-bottom: 6px; letter-spacing: 0.08em;">OVERALL SCORE</div>
+      <div class="verdict-bar">
+        <div class="verdict-fill" id="verdict-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+    <button class="btn-go" style="width: auto; padding: 16px 32px; font-size: 14px;" onclick="startTest()">Test Again</button>
+  </div>
+</div>
+
+<!-- INFO GRID -->
+<div class="info-grid">
+  <div class="info-cell">
+    <div class="info-cell-num">17</div>
+    <div class="info-cell-text"><strong>Data points collected</strong> per measurement pass. We are thorough. Possibly too thorough. Your router is starting to worry.</div>
+  </div>
+  <div class="info-cell">
+    <div class="info-cell-num">0ms</div>
+    <div class="info-cell-text"><strong>Time wasted on ads</strong> or dark patterns. Just a clean test. Wi.Speed has principles. Wi.Speed also has strong opinions about your ISP.</div>
+  </div>
+  <div class="info-cell">
+    <div class="info-cell-num">±2%</div>
+    <div class="info-cell-text"><strong>Margin of error</strong> (approximately). Real-world results vary based on cosmic rays, your microwave, and whether Mercury is in retrograde.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Wi.Speed LABS — NOT AFFILIATED WITH YOUR ISP — DEFINITELY NOT JUDGING YOU</p>
+  <p>© 2025 — MADE WITH EXCESSIVE SERIOUSNESS</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
